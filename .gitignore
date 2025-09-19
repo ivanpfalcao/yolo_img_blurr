@@ -2,6 +2,5 @@ detect/test
 imagens_panoramicas_com_fotos
 output_images
 runs
-teste
 yolo*.pt
 blurred_img
