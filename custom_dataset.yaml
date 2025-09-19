@@ -1,0 +1,16 @@
+# custom_dataset.yaml
+
+# Root directory of the dataset
+#path: /mnt/c/projects/py_blurr/treino/placas_mercosul_tagged
+path: ./treino/placas_mercosul_tagged
+
+# Training, validation, and testing image directories relative to 'path'
+train: images
+val: images
+test: images
+
+# Number of classes
+nc: 1
+
+# Class names in the correct order
+names: ['placa']
