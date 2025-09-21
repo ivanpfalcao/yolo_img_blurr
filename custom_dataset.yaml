@@ -2,15 +2,15 @@
 
 # Root directory of the dataset
 #path: /mnt/c/projects/py_blurr/treino/placas_mercosul_tagged
-path: ./treino/placas_mercosul_tagged
+path: ./train_test_labeled_data
 
 # Training, validation, and testing image directories relative to 'path'
-train: images
-val: images
-test: images
+train: train/images
+val: train/images
+test: test/images
 
 # Number of classes
 nc: 1
 
 # Class names in the correct order
-names: ['placa']
+#names: ['placa']

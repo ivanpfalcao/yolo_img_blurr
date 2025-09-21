@@ -4,3 +4,4 @@ output_images
 runs
 yolo*.pt
 blurred_img
+train_test_labeled_data

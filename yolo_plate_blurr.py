@@ -11,7 +11,7 @@ class ImageBlurr():
         self.model: YOLO = YOLO(self.yolo_model)
         logging.info(f"Yolo model name: {yolo_model}")
 
-    def model_train(self, yaml_data_path, epochs = 100, imgsz = 640):
+    def model_train(self, yaml_data_path, epochs = 100, imgsz = 1024):
         self.model.train(data=yaml_data_path, epochs = epochs, imgsz = imgsz)
 
     def predict(
@@ -117,8 +117,8 @@ class PlateBlurr():
                    , input_image = None
                    , output_img_path = None):
         
-        logging.info(f"input_image: {input_image}")
-        logging.info(f"output_img_path: {output_img_path}")         
+        #logging.info(f"input_image: {input_image}")
+        #logging.info(f"output_img_path: {output_img_path}")         
         if input_image is None:
             input_img = f'{self.current_file_path}/teste/DUH27ZB3JZL4FLRJXF4BMWD3XQ.jpg'
         else:
@@ -131,8 +131,8 @@ class PlateBlurr():
 
         os.makedirs(output_image_path, exist_ok=True)     
 
-        logging.info(f"input_img: {input_img}")
-        logging.info(f"output_image_path: {output_image_path}") 
+        #logging.info(f"input_img: {input_img}")
+        #logging.info(f"output_image_path: {output_image_path}") 
 
         self.img_blurr.blurr_image(
             input_image = input_img
@@ -143,11 +143,24 @@ class PlateBlurr():
 current_file = os.path.abspath(__file__)
 current_file_path = os.path.dirname(current_file) 
 
-
-#plate_blurr = PlateBlurr()
-#plate_blurr.model_train()
+plate_blurr = PlateBlurr()
+plate_blurr.model_train()
 
 
 plate_blurr = PlateBlurr(f'{current_file_path}/runs/detect/train/weights/best.pt')
+
+
+img_test_list = []
+img_test_list.append(f'{current_file_path}/teste/34MS950.jpg')
+img_test_list.append(f'{current_file_path}/teste/DUH27ZB3JZL4FLRJXF4BMWD3XQ.jpg')
+
 ##plate_blurr.model_test()
-plate_blurr.blurr_plate()
+
+for img_to_test in img_test_list:
+    plate_blurr.blurr_plate(
+        img_to_test
+        ,f'{current_file_path}/blurred_img'
+    )
+
+
+
