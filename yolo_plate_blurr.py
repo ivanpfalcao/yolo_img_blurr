@@ -117,6 +117,8 @@ class PlateBlurr():
                    , input_image = None
                    , output_img_path = None):
         
+        logging.info(f"input_image: {input_image}")
+        logging.info(f"output_img_path: {output_img_path}")         
         if input_image is None:
             input_img = f'{self.current_file_path}/teste/DUH27ZB3JZL4FLRJXF4BMWD3XQ.jpg'
         else:
@@ -125,9 +127,12 @@ class PlateBlurr():
         if output_img_path is None:
             output_image_path = f'{self.current_file_path}/blurred_img'
         else:
-            output_image_path = input_image  
+            output_image_path = output_img_path  
 
-        os.makedirs(output_image_path, exist_ok=True)          
+        os.makedirs(output_image_path, exist_ok=True)     
+
+        logging.info(f"input_img: {input_img}")
+        logging.info(f"output_image_path: {output_image_path}") 
 
         self.img_blurr.blurr_image(
             input_image = input_img
@@ -144,5 +149,5 @@ current_file_path = os.path.dirname(current_file)
 
 
 plate_blurr = PlateBlurr(f'{current_file_path}/runs/detect/train/weights/best.pt')
-#plate_blurr.model_test()
+##plate_blurr.model_test()
 plate_blurr.blurr_plate()
