@@ -6,13 +6,21 @@ import cv2
 logging.basicConfig(level=logging.INFO)
 
 class ImageBlurr():
-    def __init__(self, yolo_model: str = 'yolo11n.pt'):
+    def __init__(self, yolo_model: str = 'yolo11s.pt'):
         self.yolo_model = yolo_model
         self.model: YOLO = YOLO(self.yolo_model)
         logging.info(f"Yolo model name: {yolo_model}")
 
-    def model_train(self, yaml_data_path, epochs = 100, imgsz = 1024):
-        self.model.train(data=yaml_data_path, epochs = epochs, imgsz = imgsz)
+    def model_train(self, yaml_data_path, epochs = 50, imgsz = 3072):
+        self.model.train(
+            data=yaml_data_path
+            , epochs = epochs
+            , imgsz = imgsz
+            , patience = 10
+            #, workers = 12
+            , batch = 1
+            , cache = 'disk'
+        )
 
     def predict(
             self
@@ -20,7 +28,10 @@ class ImageBlurr():
             , project: str = 'detect'
             , name: str = 'test'
             , save: bool = True
-            , exist_ok: bool = True):
+            , exist_ok: bool = True
+            , imgsz = 3072
+            , conf=0.25
+            ):
         
         result = self.model.predict(
             source=image_to_blurr
@@ -29,6 +40,8 @@ class ImageBlurr():
             , project=project
             , name=name
             , exist_ok=exist_ok
+            , imgsz=imgsz
+            , conf=conf
         ) 
 
         return result
@@ -43,7 +56,7 @@ class ImageBlurr():
 
         results = self.predict(
             image_to_blurr=input_image
-            , save=False
+            , save=True
         )   
 
         image = cv2.imread(input_image)
@@ -151,9 +164,19 @@ plate_blurr = PlateBlurr(f'{current_file_path}/runs/detect/train/weights/best.pt
 
 
 img_test_list = []
-img_test_list.append(f'{current_file_path}/teste/34MS950.jpg')
-img_test_list.append(f'{current_file_path}/teste/DUH27ZB3JZL4FLRJXF4BMWD3XQ.jpg')
-
+#img_test_list.append(f'{current_file_path}/teste/34MS950.jpg')
+#img_test_list.append(f'{current_file_path}/teste/DUH27ZB3JZL4FLRJXF4BMWD3XQ.jpg')
+img_test_list.append(f'/mnt/c/projects/yolo_img_blurr/train_test_labeled_data/test/images/3289bf0d-20250527_140755_009772.jpg')
+img_test_list.append(f'/mnt/c/projects/yolo_img_blurr/train_test_labeled_data/test/images/45204927-20250531_140130_010337.jpg')
+img_test_list.append(f'/mnt/c/projects/yolo_img_blurr/train_test_labeled_data/test/images/49340a37-20250527_171019_005868.jpg')
+img_test_list.append(f'/mnt/c/projects/yolo_img_blurr/train_test_labeled_data/test/images/796ed600-20250531_124652_005988.jpg')
+img_test_list.append(f'/mnt/c/projects/yolo_img_blurr/train_test_labeled_data/test/images/83894b79-20250531_124650_005986.jpg')
+img_test_list.append(f'/mnt/c/projects/yolo_img_blurr/train_test_labeled_data/test/images/95d258d6-20250527_125448_002291.jpg')
+img_test_list.append(f'/mnt/c/projects/yolo_img_blurr/train_test_labeled_data/test/images/9d494212-20250531_130225_006775.jpg')
+img_test_list.append(f'/mnt/c/projects/yolo_img_blurr/train_test_labeled_data/test/images/b3acb715-20250527_164447_003801.jpg')
+img_test_list.append(f'/mnt/c/projects/yolo_img_blurr/train_test_labeled_data/test/images/c221ba2c-20250531_172154_004800.jpg')
+img_test_list.append(f'/mnt/c/projects/yolo_img_blurr/train_test_labeled_data/test/images/cc4b2387-20250531_171922_004600.jpg')
+img_test_list.append(f'/mnt/c/projects/yolo_img_blurr/train_test_labeled_data/test/images/e33bf08d-20250531_141137_011006.jpg')
 ##plate_blurr.model_test()
 
 for img_to_test in img_test_list:
